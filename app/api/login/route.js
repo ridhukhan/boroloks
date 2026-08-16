@@ -8,7 +8,6 @@ export async function POST(req) {
   try {
     const { email, password } = await req.json();
 
-    // ১. ফিল্ডগুলো চেক করা
     if (!email || !password) {
       return NextResponse.json(
         { success: false, message: "সবগুলো ফিল্ড পূরণ করুন।" },
@@ -16,10 +15,8 @@ export async function POST(req) {
       );
     }
 
-    // ২. ডাটাবেজ কানেক্ট করা
     await connectDB();
 
-    // ৩. ইমেইল অনুযায়ী ইউজার খোঁজা
     const user = await User.findOne({ email });
     if (!user) {
       return NextResponse.json(
@@ -28,7 +25,6 @@ export async function POST(req) {
       );
     }
 
-    // ৪. পাসওয়ার্ড ম্যাচ করানো
     const isPasswordMatch = await bcrypt.compare(password, user.password);
     if (!isPasswordMatch) {
       return NextResponse.json(
@@ -37,20 +33,16 @@ export async function POST(req) {
       );
     }
 
-    // ৫. JWT টোকেন তৈরি করা
     const tokenData = {
       id: user._id,
       username: user.username,
       email: user.email,
     };
 
-    // .env ফাইল থেকে গোপন কী (Secret Key) ব্যবহার করা ভালো
     const secretKey = process.env.JWT_SECRET ;
     
-    // টোকেন তৈরি (১ দিনের মেয়াদ)
     const token = jwt.sign(tokenData, secretKey, { expiresIn: "1d" });
 
-    // ৬. রেসপন্স তৈরি এবং কুকিতে টোকেন সেট করা
     const response = NextResponse.json(
       {
         success: true,
