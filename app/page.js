@@ -1,13 +1,31 @@
 "use client";
-
+import { Cookie, cookies } from "next/headers";
+import { jwtVerify } from "jose";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Lineicons, WwwCursorStrokeRounded } from "@lineiconshq/react-lineicons";
 import { AnchorBulk, CloudBolt1Bulk, EnterDownBulk, ExitUpBulk } from "@lineiconshq/free-icons";
-export default function Home() {
+
+
+
+
+
+export default async function Home() {
+  const cookieStore=await cookies();
+  const token=cookieStore.get("token")?.value
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+let username=null
+if(token){
 
+  try {
+    const secret = new TextEncoder().encode(process.env.JWT_SECRET);
+const {payload}= await jwtVerify(token,secret)
+username=payload.username
+  } catch (error) {
+    console.error("Token verification failed:", error);
+  }
+}
   const handleLogout = async () => {
     try {
       setLoading(true);
@@ -39,6 +57,9 @@ export default function Home() {
           {loading ? "Logging out..." : "Logout"}
         </button>
       </nav>
+      <div className="bg-white h-20 w-full mt-15 rounded-2xl justify-center items-center">
+<h1 className="font-bold text-2xl ">{username}</h1>
+      </div>
       <div className="bg-white h-50 w-full mt-15 rounded-2xl 
       shadow-[10px_27px_48px_-10px_#001]">
        <div className="flex">
