@@ -60,12 +60,13 @@ export async function POST(req) {
 
     // Cookie সেটিং (HTTP-Only যা নিরাপত্তার জন্য সেরা)
     response.cookies.set("token", token, {
-      httpOnly: true, // ক্লায়েন্ট সাইড JS দিয়ে অ্যাক্সেস করা যাবে না (XSS প্রটেকশন)
-      secure: true, 
-      sameSite: "strict", // CSRF অ্যাটাক প্রতিরোধের জন্য
-      maxAge: 24 * 60 * 60, // ১ দিন (সেকেন্ডে)
-      path: "/", // পুরো সাইটে সহজলভ্য
-    });
+  httpOnly: true,
+  // প্রোডাকশনে (HTTPS) true হবে, কিন্তু লোকালহোস্টে (HTTP) false হবে
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "Strict",
+  maxAge: 24 * 60 * 60, // ১ দিন
+  path: "/",
+});
 
     return response;
   } catch (error) {
