@@ -1,4 +1,3 @@
-"use client";
 import { cookies } from "next/headers";
 import { jwtVerify } from "jose";
 import { useRouter } from "next/navigation";
