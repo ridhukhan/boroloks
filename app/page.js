@@ -58,7 +58,7 @@ username=payload.username
         </button>
       </nav>
       <div className="bg-white h-20 w-full mt-15 rounded-2xl justify-center items-center">
-<h1 className="font-bold text-2xl ">{username}</h1>
+<h1 className="font-bold text-2xl ">{username?`Name: ${username}`: "UNKNOWN"}</h1>
       </div>
       <div className="bg-white h-50 w-full mt-15 rounded-2xl 
       shadow-[10px_27px_48px_-10px_#001]">
