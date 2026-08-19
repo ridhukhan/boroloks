@@ -1,5 +1,5 @@
 "use client";
-import { Cookie, cookies } from "next/headers";
+import { cookies } from "next/headers";
 import { jwtVerify } from "jose";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
