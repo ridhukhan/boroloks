@@ -1,6 +1,6 @@
 "use client"
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Lineicons, WwwCursorStrokeRounded } from "@lineiconshq/react-lineicons";
 import { AnchorBulk, CloudBolt1Bulk, EnterDownBulk, ExitUpBulk } from "@lineiconshq/free-icons";
 
