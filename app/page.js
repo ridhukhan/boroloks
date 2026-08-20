@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Lineicons, WwwCursorStrokeRounded } from "@lineiconshq/react-lineicons";
-import { AnchorBulk, CloudBolt1Bulk, EnterDownBulk, ExitUpBulk } from "@lineiconshq/free-icons";
+import { AnchorBulk, CloudBolt1Bulk, EnterDownBulk, ExitUpBulk, Headphone1Bulk, Share1Bulk, Wallet1Bulk } from "@lineiconshq/free-icons";
 
 // ❌ async সরিয়ে দিন -> ✅ সাধারণ ফাংশন কম্পোনেন্ট করুন
 export default function Home() {
@@ -58,29 +58,46 @@ export default function Home() {
         </button>
       </nav>
 
-      <div className="bg-white h-20 w-full mt-15 rounded-2xl flex justify-center items-center">
+      <div className="bg-white h-20 
+      flex flex-col
+      w-full mt-15 rounded-2xl flex justify-center items-center">
         <h1 className="font-bold text-2xl text-black">
           {loading ? "Loading..." : user ? `Name: ${user.username}` : "UNKNOWN"}
         </h1>
+        <h1 className="flex">
+            <Lineicons icon={Wallet1Bulk} size={30} color="green" className="ml-1.5"/>
+<span className="text-3xl font-bold">: 0.00</span>
+        </h1>
       </div>
 
-      <div className="bg-white h-50 w-full mt-15 rounded-2xl shadow-[10px_27px_48px_-10px_#001]">
+      <div className="bg-white h-55 w-full mt-15 rounded-2xl shadow-[10px_27px_48px_-10px_#001]">
         <div className="flex">
-          <button className="flex flex-col font-bold ml-5 mt-4 border-4 rounded-2xl p-2 border-solid border-black">
+          <button className="flex flex-col font-bold
+          bg-green-800 text-amber-50
+          ml-5 mt-4 border-4 rounded-2xl p-2 border-solid border-black">
             <Lineicons icon={EnterDownBulk} size={40} color="black" className="ml-1.5"/>
             <span>deposit</span>
           </button>
-          <button className="flex flex-col font-bold ml-5 mt-4 border-4 rounded-2xl p-2 border-solid border-black">
+          <button className="flex 
+          bg-red-600 text-amber-50
+          flex-col font-bold ml-5 mt-4 border-4 rounded-2xl p-2 border-solid border-black">
             <Lineicons icon={ExitUpBulk} size={40} color="black" className="ml-2.5"/>
             <span>withdraw</span>
           </button>
           <button className="flex flex-col font-bold ml-5 mt-4 border-4 rounded-2xl p-2 border-solid border-black">
             <Lineicons icon={AnchorBulk} size={40} color="black" className="ml-1.5"/>
-            <span>deposit</span>
+            <span>work$$$</span>
+          </button><br/>
+         
+        </div>
+        <div className="flex">
+           <button className="flex flex-col font-bold ml-5 mt-4 border-4 rounded-2xl p-2 border-solid border-black">
+            <Lineicons icon={Headphone1Bulk} size={40} color="black"/>
+            <span>helpLine</span>
           </button>
-          <button className="flex flex-col font-bold ml-5 mt-4 border-4 rounded-2xl p-2 border-solid border-black">
-            <Lineicons icon={EnterDownBulk} size={40} color="black"/>
-            <span>deposit</span>
+           <button className="flex flex-col font-bold ml-5 mt-4 border-4 rounded-2xl p-2 border-solid border-black">
+            <Lineicons icon={Share1Bulk} size={40} color="black"/>
+            <span>Refferal</span>
           </button>
         </div>
       </div>
