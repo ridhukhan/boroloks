@@ -1,5 +1,4 @@
-import { cookies } from "next/headers";
-import { jwtVerify } from "jose";
+"use client"
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { Lineicons, WwwCursorStrokeRounded } from "@lineiconshq/react-lineicons";
@@ -10,21 +9,27 @@ import { AnchorBulk, CloudBolt1Bulk, EnterDownBulk, ExitUpBulk } from "@lineicon
 
 
 export default async function Home() {
-  const cookieStore=await cookies();
-  const token=cookieStore.get("token")?.value
+  const [user, setUser] = useState(null);
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-let username=null
-if(token){
+useEffect(() => {
+    async function getUser() {
+      try {
+        const res = await fetch("/api/me");
+        if (res.ok) {
+          const data = await res.json();
+          setUser(data.user);
+        }
+      } catch (error) {
+        console.error("Failed to fetch user:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
 
-  try {
-    const secret = new TextEncoder().encode(process.env.JWT_SECRET);
-const {payload}= await jwtVerify(token,secret)
-username=payload.username
-  } catch (error) {
-    console.error("Token verification failed:", error);
-  }
-}
+    getUser();
+  }, []);
+
   const handleLogout = async () => {
     try {
       setLoading(true);
@@ -57,7 +62,7 @@ username=payload.username
         </button>
       </nav>
       <div className="bg-white h-20 w-full mt-15 rounded-2xl justify-center items-center">
-<h1 className="font-bold text-2xl ">{username?`Name: ${username}`: "UNKNOWN"}</h1>
+<h1 className="font-bold text-2xl ">{user?`Name: ${user.username}`: "UNKNOWN"}</h1>
       </div>
       <div className="bg-white h-50 w-full mt-15 rounded-2xl 
       shadow-[10px_27px_48px_-10px_#001]">
